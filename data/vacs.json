@@ -1,0 +1,19 @@
+[
+  { "VAC_Code": "IN_DEL", "VAC_Name": "New Delhi VAC",       "Country_Code": "IN" },
+  { "VAC_Code": "IN_MUM", "VAC_Name": "Mumbai VAC",          "Country_Code": "IN" },
+  { "VAC_Code": "IN_BLR", "VAC_Name": "Bengaluru VAC",       "Country_Code": "IN" },
+  { "VAC_Code": "IN_CHE", "VAC_Name": "Chennai VAC",         "Country_Code": "IN" },
+  { "VAC_Code": "IN_HYD", "VAC_Name": "Hyderabad VAC",       "Country_Code": "IN" },
+  { "VAC_Code": "IN_KOL", "VAC_Name": "Kolkata VAC",         "Country_Code": "IN" },
+  { "VAC_Code": "AE_DXB", "VAC_Name": "Dubai VAC",           "Country_Code": "AE" },
+  { "VAC_Code": "AE_AUH", "VAC_Name": "Abu Dhabi VAC",       "Country_Code": "AE" },
+  { "VAC_Code": "GB_LON", "VAC_Name": "London VAC",          "Country_Code": "GB" },
+  { "VAC_Code": "GB_MCR", "VAC_Name": "Manchester VAC",      "Country_Code": "GB" },
+  { "VAC_Code": "US_NYC", "VAC_Name": "New York VAC",        "Country_Code": "US" },
+  { "VAC_Code": "US_LAX", "VAC_Name": "Los Angeles VAC",     "Country_Code": "US" },
+  { "VAC_Code": "DE_BER", "VAC_Name": "Berlin VAC",          "Country_Code": "DE" },
+  { "VAC_Code": "SG_SIN", "VAC_Name": "Singapore VAC",       "Country_Code": "SG" },
+  { "VAC_Code": "MY_KUL", "VAC_Name": "Kuala Lumpur VAC",    "Country_Code": "MY" },
+  { "VAC_Code": "SA_RYD", "VAC_Name": "Riyadh VAC",          "Country_Code": "SA" },
+  { "VAC_Code": "SA_JED", "VAC_Name": "Jeddah VAC",          "Country_Code": "SA" }
+]

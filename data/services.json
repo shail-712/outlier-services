@@ -1,0 +1,24 @@
+[
+  { "Service_Code": "SVC_XEROX_A4",  "Service_Name": "Xerox / Photocopy (A4)",     "Service_Type": "VAS", "Currency_Code": "INR", "Unit_Price": 5.00,   "Country_Code": "IN" },
+  { "Service_Code": "SVC_XEROX_A3",  "Service_Name": "Xerox / Photocopy (A3)",     "Service_Type": "VAS", "Currency_Code": "INR", "Unit_Price": 10.00,  "Country_Code": "IN" },
+  { "Service_Code": "SVC_PRINT_BW",  "Service_Name": "Printout B&W (A4)",          "Service_Type": "VAS", "Currency_Code": "INR", "Unit_Price": 5.00,   "Country_Code": "IN" },
+  { "Service_Code": "SVC_PRINT_CLR", "Service_Name": "Printout Colour (A4)",       "Service_Type": "VAS", "Currency_Code": "INR", "Unit_Price": 20.00,  "Country_Code": "IN" },
+  { "Service_Code": "SVC_PHOTO",     "Service_Name": "Passport Photograph",        "Service_Type": "VAS", "Currency_Code": "INR", "Unit_Price": 150.00, "Country_Code": "IN" },
+  { "Service_Code": "SVC_SCAN",      "Service_Name": "Document Scanning",          "Service_Type": "VAS", "Currency_Code": "INR", "Unit_Price": 10.00,  "Country_Code": "IN" },
+  { "Service_Code": "SVC_NOTARY",    "Service_Name": "Notary Attestation",         "Service_Type": "VAS", "Currency_Code": "INR", "Unit_Price": 500.00, "Country_Code": "IN" },
+  { "Service_Code": "SVC_COURIER",   "Service_Name": "Document Courier",           "Service_Type": "VAS", "Currency_Code": "INR", "Unit_Price": 250.00, "Country_Code": "IN" },
+
+  { "Service_Code": "AE_XEROX",      "Service_Name": "Xerox / Photocopy (A4)",     "Service_Type": "VAS", "Currency_Code": "AED", "Unit_Price": 1.00,   "Country_Code": "AE" },
+  { "Service_Code": "AE_PRINT_BW",   "Service_Name": "Printout B&W",               "Service_Type": "VAS", "Currency_Code": "AED", "Unit_Price": 1.00,   "Country_Code": "AE" },
+  { "Service_Code": "AE_PHOTO",      "Service_Name": "Passport Photograph",        "Service_Type": "VAS", "Currency_Code": "AED", "Unit_Price": 20.00,  "Country_Code": "AE" },
+  { "Service_Code": "AE_COURIER",    "Service_Name": "Document Courier",           "Service_Type": "VAS", "Currency_Code": "AED", "Unit_Price": 30.00,  "Country_Code": "AE" },
+
+  { "Service_Code": "GB_XEROX",      "Service_Name": "Xerox / Photocopy (A4)",     "Service_Type": "VAS", "Currency_Code": "GBP", "Unit_Price": 0.50,   "Country_Code": "GB" },
+  { "Service_Code": "GB_PRINT_BW",   "Service_Name": "Printout B&W",               "Service_Type": "VAS", "Currency_Code": "GBP", "Unit_Price": 0.50,   "Country_Code": "GB" },
+  { "Service_Code": "GB_PHOTO",      "Service_Name": "Passport Photograph",        "Service_Type": "VAS", "Currency_Code": "GBP", "Unit_Price": 12.00,  "Country_Code": "GB" },
+  { "Service_Code": "GB_COURIER",    "Service_Name": "Document Courier",           "Service_Type": "VAS", "Currency_Code": "GBP", "Unit_Price": 15.00,  "Country_Code": "GB" },
+
+  { "Service_Code": "SG_XEROX",      "Service_Name": "Xerox / Photocopy (A4)",     "Service_Type": "VAS", "Currency_Code": "SGD", "Unit_Price": 0.50,   "Country_Code": "SG" },
+  { "Service_Code": "SG_PHOTO",      "Service_Name": "Passport Photograph",        "Service_Type": "VAS", "Currency_Code": "SGD", "Unit_Price": 15.00,  "Country_Code": "SG" },
+  { "Service_Code": "SG_COURIER",    "Service_Name": "Document Courier",           "Service_Type": "VAS", "Currency_Code": "SGD", "Unit_Price": 25.00,  "Country_Code": "SG" }
+]
