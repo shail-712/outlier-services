@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode } from 'react';
 import { Country, VAC, CartItem, PaymentMode, Currency, TransactionRecord } from '@/types';
+import { api } from '@/lib/api';
 
 interface AppContextValue {
   // Selections
@@ -28,16 +29,16 @@ interface AppContextValue {
   removeFromCart: (serviceCode: string) => void;
   clearCart: () => void;
 
-  // Checkout
-  checkout: () => TransactionRecord[] | null;
+  // Checkout — now async since it hits the API
+  checkout: () => Promise<TransactionRecord[] | null>;
+  checkoutError: string | null;
+  isCheckingOut: boolean;
 
   // Computed
   grandTotal: number;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
-
-let transactionCounter = 1000;
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
@@ -46,6 +47,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(null);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [transactions, setTransactions] = useState<TransactionRecord[]>([]);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   const addToCart = (item: CartItem) => {
     setCart((prev) => {
@@ -91,39 +94,39 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const grandTotal = cart.reduce((sum, item) => sum + item.line_total, 0);
 
-  const checkout = (): TransactionRecord[] | null => {
-    if (!selectedVAC || !selectedPayment || !selectedCurrency || !selectedCountry || cart.length === 0) return null;
+  // Now hits POST /api/transactions instead of building the record locally.
+  // Prices/totals are computed server-side; the response shape (flat
+  // TransactionRecord[]) is identical to what the old local version returned,
+  // so CartSummary / CheckoutModal / TransactionHistory need no changes.
+  const checkout = async (): Promise<TransactionRecord[] | null> => {
+    if (!selectedVAC || !selectedPayment || !selectedCurrency || !selectedCountry || cart.length === 0) {
+      return null;
+    }
 
-    const now = new Date().toISOString();
-    const batchId = `BATCH-${Date.now()}`;
-    const total = cart.reduce((s, i) => s + i.line_total, 0);
+    setCheckoutError(null);
+    setIsCheckingOut(true);
 
-    const records: TransactionRecord[] = cart.map((item) => {
-      transactionCounter += 1;
-      return {
-        Transaction_ID: transactionCounter,
+    try {
+      const records = await api.createTransaction({
         VAC_Code: selectedVAC.VAC_Code,
-        VAC_Name: selectedVAC.VAC_Name,
-        Country_Name: selectedCountry.Country_Name,
-        Service_Code: item.service.Service_Code,
-        Service_Name: item.service.Service_Name,
+        Country_Code: selectedCountry.Country_Code,
         Payment_Code: selectedPayment.Payment_Code,
-        Payment_Name: selectedPayment.Payment_Name,
         Currency_Code: selectedCurrency.Currency_Code,
-        Currency_Symbol: selectedCurrency.Currency_Symbol,
-        Unit_Price: item.service.Unit_Price,
-        Quantity: item.quantity,
-        Line_Total: item.line_total,
-        Grand_Total: total,
-        Transaction_Date: now,
-        Transaction_Status: 'Completed',
-        Batch_ID: batchId,
-      };
-    });
+        line_items: cart.map((item) => ({
+          Service_Code: item.service.Service_Code,
+          Quantity: item.quantity,
+        })),
+      });
 
-    setTransactions((prev) => [...records, ...prev]);
-    clearCart();
-    return records;
+      setTransactions((prev) => [...records, ...prev]);
+      clearCart();
+      return records;
+    } catch (err) {
+      setCheckoutError(err instanceof Error ? err.message : 'Checkout failed');
+      return null;
+    } finally {
+      setIsCheckingOut(false);
+    }
   };
 
   return (
@@ -144,6 +147,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         removeFromCart,
         clearCart,
         checkout,
+        checkoutError,
+        isCheckingOut,
         grandTotal,
       }}
     >

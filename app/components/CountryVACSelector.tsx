@@ -1,31 +1,61 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { Country, VAC, Currency } from '@/types';
-
-import countriesData from '@/data/countries.json';
-import vacsData from '@/data/vacs.json';
-import currenciesData from '@/data/currencies.json';
-
-const countries = countriesData as Country[];
-const vacs = vacsData as VAC[];
-const currencies = currenciesData as Currency[];
+import { api } from '@/lib/api';
 
 export default function CountryVACSelector() {
   const { selectedCountry, setSelectedCountry, selectedVAC, setSelectedVAC, setSelectedCurrency } = useAppContext();
   const [countrySearch, setCountrySearch] = useState('');
   const [countryOpen, setCountryOpen] = useState(false);
 
+  // Master data, loaded once from the API
+  const [countries, setCountries] = useState<Country[]>([]);
+  const [currencies, setCurrencies] = useState<Currency[]>([]);
+  const [loadingCountries, setLoadingCountries] = useState(true);
+
+  // VACs are fetched per-country (mirrors GET /api/vacs?country=XX)
+  const [vacs, setVacs] = useState<VAC[]>([]);
+  const [loadingVacs, setLoadingVacs] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoadingCountries(true);
+    Promise.all([api.getCountries(), api.getCurrencies()])
+      .then(([countryData, currencyData]) => {
+        if (cancelled) return;
+        setCountries(countryData);
+        setCurrencies(currencyData);
+      })
+      .catch((err) => console.error('Failed to load countries/currencies:', err))
+      .finally(() => !cancelled && setLoadingCountries(false));
+    return () => { cancelled = true; };
+  }, []);
+
+  useEffect(() => {
+    if (!selectedCountry) {
+      setVacs([]);
+      return;
+    }
+    let cancelled = false;
+    setLoadingVacs(true);
+    api
+      .getVACs(selectedCountry.Country_Code)
+      .then((data) => !cancelled && setVacs(data))
+      .catch((err) => console.error('Failed to load VACs:', err))
+      .finally(() => !cancelled && setLoadingVacs(false));
+    return () => { cancelled = true; };
+  }, [selectedCountry]);
+
   const filteredCountries = useMemo(() =>
     countries.filter((c) =>
       c.Country_Name.toLowerCase().includes(countrySearch.toLowerCase()) ||
       c.Country_Code.toLowerCase().includes(countrySearch.toLowerCase())
-    ), [countrySearch]);
+    ), [countries, countrySearch]);
 
-  const filteredVACs = useMemo(() =>
-    selectedCountry ? vacs.filter((v) => v.Country_Code === selectedCountry.Country_Code) : [],
-    [selectedCountry]);
+  // vacs is already scoped to selectedCountry via the API call above
+  const filteredVACs = vacs;
 
   const handleSelectCountry = (country: Country) => {
     const currency = currencies.find((c) => c.Currency_Code === country.Currency_Code) ?? null;
@@ -91,6 +121,7 @@ export default function CountryVACSelector() {
           {/* Trigger */}
           <button
             onClick={() => setCountryOpen((o) => !o)}
+            disabled={loadingCountries}
             style={{
               width: '100%',
               padding: '8px 12px',
@@ -100,7 +131,7 @@ export default function CountryVACSelector() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              cursor: 'pointer',
+              cursor: loadingCountries ? 'not-allowed' : 'pointer',
               fontSize: '13px',
               color: selectedCountry ? '#0F172A' : '#94A3B8',
               textAlign: 'left',
@@ -108,7 +139,9 @@ export default function CountryVACSelector() {
             }}
           >
             <span>
-              {selectedCountry
+              {loadingCountries
+                ? 'Loading countries...'
+                : selectedCountry
                 ? `${selectedCountry.Country_Name} (${selectedCountry.Country_Code})`
                 : 'Select country...'}
             </span>
@@ -209,7 +242,7 @@ export default function CountryVACSelector() {
               const vac = filteredVACs.find((v) => v.VAC_Code === e.target.value) ?? null;
               setSelectedVAC(vac);
             }}
-            disabled={!selectedCountry}
+            disabled={!selectedCountry || loadingVacs}
             style={{
               width: '100%',
               padding: '8px 12px',
@@ -228,7 +261,9 @@ export default function CountryVACSelector() {
               paddingRight: '32px',
             }}
           >
-            <option value="">{selectedCountry ? 'Select VAC...' : 'Select a country first'}</option>
+            <option value="">
+              {loadingVacs ? 'Loading VACs...' : selectedCountry ? 'Select VAC...' : 'Select a country first'}
+            </option>
             {filteredVACs.map((vac) => (
               <option key={vac.VAC_Code} value={vac.VAC_Code}>
                 {vac.VAC_Name}

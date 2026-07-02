@@ -1,19 +1,35 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { Service } from '@/types';
-import servicesData from '@/data/services.json';
-import currenciesData from '@/data/currencies.json';
-
-const allServices = servicesData as Service[];
+import { api } from '@/lib/api';
 
 export default function ServicesList() {
   const { selectedCountry, selectedVAC, selectedCurrency, cart, addToCart, updateCartQuantity } = useAppContext();
 
-  const services = useMemo(() => {
-    if (!selectedCountry) return [];
-    return allServices.filter((s) => s.Country_Code === selectedCountry.Country_Code);
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!selectedCountry) {
+      setServices([]);
+      return;
+    }
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    api
+      .getServices(selectedCountry.Country_Code)
+      .then((data) => !cancelled && setServices(data))
+      .catch((err) => {
+        if (cancelled) return;
+        console.error('Failed to load services:', err);
+        setError('Could not load services. Please try again.');
+      })
+      .finally(() => !cancelled && setLoading(false));
+    return () => { cancelled = true; };
   }, [selectedCountry]);
 
   const symbol = selectedCurrency?.Currency_Symbol ?? '₹';
@@ -61,6 +77,53 @@ export default function ServicesList() {
           <div style={{ fontSize: '13px', color: '#94A3B8' }}>
             Select a country and VAC to load available services.
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ── loading state ───────────────────────────────────────────────────────────
+  if (loading) {
+    return (
+      <div
+        style={{
+          backgroundColor: '#FFFFFF',
+          border: '1px solid #E2E8F0',
+          borderRadius: '6px',
+          padding: '20px',
+        }}
+      >
+        <SectionHeader count={0} />
+        <div style={{ marginTop: '16px', padding: '32px', textAlign: 'center', fontSize: '13px', color: '#94A3B8' }}>
+          Loading services...
+        </div>
+      </div>
+    );
+  }
+
+  // ── error state ──────────────────────────────────────────────────────────────
+  if (error) {
+    return (
+      <div
+        style={{
+          backgroundColor: '#FFFFFF',
+          border: '1px solid #E2E8F0',
+          borderRadius: '6px',
+          padding: '20px',
+        }}
+      >
+        <SectionHeader count={0} />
+        <div
+          style={{
+            marginTop: '16px',
+            padding: '32px',
+            backgroundColor: '#FEF2F2',
+            border: '1px solid #FECACA',
+            borderRadius: '5px',
+            textAlign: 'center',
+          }}
+        >
+          <div style={{ fontSize: '13px', color: '#991B1B' }}>{error}</div>
         </div>
       </div>
     );

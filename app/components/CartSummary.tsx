@@ -1,13 +1,10 @@
 'use client';
 
-// Import React hooks, shared context, types, and modal component
-
 import { useState } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { TransactionRecord } from '@/types';
 import CheckoutModal from './CheckoutModal';
 
-  // Access global cart data and actions from the application context
 export default function CartSummary() {
   const {
     cart,
@@ -20,21 +17,19 @@ export default function CartSummary() {
     removeFromCart,
     clearCart,
     checkout,
+    checkoutError,
+    isCheckingOut,
   } = useAppContext();
 
-    // Get selected currency details with default fallback values
   const symbol = selectedCurrency?.Currency_Symbol ?? '₹';
   const currencyCode = selectedCurrency?.Currency_Code ?? 'INR';
-  
-// Store checkout receipt to display after a successful transaction
+
   const [receipt, setReceipt] = useState<TransactionRecord[] | null>(null);
 
-    // Enable checkout only when cart, payment method, and VAC are selected
-  const canCheckout = cart.length > 0 && selectedPayment !== null && selectedVAC !== null;
+  const canCheckout = cart.length > 0 && selectedPayment !== null && selectedVAC !== null && !isCheckingOut;
 
-    // Process checkout and save transaction records for the receipt modal
-  const handleCheckout = () => {
-    const records = checkout();
+  const handleCheckout = async () => {
+    const records = await checkout();
     if (records && records.length > 0) {
       setReceipt(records);
     }
@@ -302,6 +297,21 @@ export default function CartSummary() {
         </div>
       )}
 
+      {/* Checkout error (from the API call) */}
+      {checkoutError && (
+        <div
+          style={{
+            padding: '8px 20px',
+            backgroundColor: '#FEF2F2',
+            borderTop: '1px solid #FECACA',
+            fontSize: '11px',
+            color: '#991B1B',
+          }}
+        >
+          {checkoutError}
+        </div>
+      )}
+
       {/* Checkout button */}
       <div style={{ padding: '16px 20px' }}>
         <button
@@ -321,9 +331,9 @@ export default function CartSummary() {
             transition: 'background-color 0.15s',
           }}
         >
-          Confirm &amp; Checkout
+          {isCheckingOut ? 'Processing...' : 'Confirm & Checkout'}
         </button>
-        {!canCheckout && cart.length > 0 && (
+        {!canCheckout && cart.length > 0 && !isCheckingOut && (
           <div style={{ fontSize: '10px', color: '#94A3B8', textAlign: 'center', marginTop: '6px' }}>
             {!selectedPayment ? 'Choose a payment mode to enable checkout' : 'Select a VAC to proceed'}
           </div>
