@@ -120,7 +120,7 @@ export default function CheckoutModal({ records, onClose }: CheckoutModalProps) 
 
             {records.map((r, idx) => (
               <div
-                key={r.Transaction_ID}
+                key={`${r.Batch_ID}-${r.Service_Code}`}
                 style={{
                   display: 'grid',
                   gridTemplateColumns: '1fr 50px 70px 80px',

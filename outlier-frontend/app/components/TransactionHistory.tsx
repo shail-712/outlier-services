@@ -149,7 +149,7 @@ export default function TransactionHistory() {
               </div>
               {records.map((r, idx) => (
                 <div
-                  key={r.Transaction_ID}
+                  key={`${r.Batch_ID}-${r.Service_Code}`}
                   style={{
                     display: 'grid',
                     gridTemplateColumns: '1fr 60px 90px 90px',
