@@ -1,0 +1,27 @@
+[
+  { "Payment_Code": "CASH_INR",  "Payment_Name": "Cash",          "Currency_Code": "INR" },
+  { "Payment_Code": "CARD_INR",  "Payment_Name": "Debit / Credit Card", "Currency_Code": "INR" },
+  { "Payment_Code": "UPI_INR",   "Payment_Name": "UPI",           "Currency_Code": "INR" },
+  { "Payment_Code": "DD_INR",    "Payment_Name": "Demand Draft",  "Currency_Code": "INR" },
+
+  { "Payment_Code": "CASH_AED",  "Payment_Name": "Cash",          "Currency_Code": "AED" },
+  { "Payment_Code": "CARD_AED",  "Payment_Name": "Debit / Credit Card", "Currency_Code": "AED" },
+
+  { "Payment_Code": "CASH_GBP",  "Payment_Name": "Cash",          "Currency_Code": "GBP" },
+  { "Payment_Code": "CARD_GBP",  "Payment_Name": "Debit / Credit Card", "Currency_Code": "GBP" },
+
+  { "Payment_Code": "CASH_USD",  "Payment_Name": "Cash",          "Currency_Code": "USD" },
+  { "Payment_Code": "CARD_USD",  "Payment_Name": "Debit / Credit Card", "Currency_Code": "USD" },
+
+  { "Payment_Code": "CASH_EUR",  "Payment_Name": "Cash",          "Currency_Code": "EUR" },
+  { "Payment_Code": "CARD_EUR",  "Payment_Name": "Debit / Credit Card", "Currency_Code": "EUR" },
+
+  { "Payment_Code": "CASH_SGD",  "Payment_Name": "Cash",          "Currency_Code": "SGD" },
+  { "Payment_Code": "CARD_SGD",  "Payment_Name": "Debit / Credit Card", "Currency_Code": "SGD" },
+
+  { "Payment_Code": "CASH_MYR",  "Payment_Name": "Cash",          "Currency_Code": "MYR" },
+  { "Payment_Code": "CARD_MYR",  "Payment_Name": "Debit / Credit Card", "Currency_Code": "MYR" },
+
+  { "Payment_Code": "CASH_SAR",  "Payment_Name": "Cash",          "Currency_Code": "SAR" },
+  { "Payment_Code": "CARD_SAR",  "Payment_Name": "Debit / Credit Card", "Currency_Code": "SAR" }
+]

@@ -1,0 +1,6 @@
+[
+  { "Region_Code": "APAC", "Region_Name": "Asia Pacific" },
+  { "Region_Code": "EMEA", "Region_Name": "Europe, Middle East & Africa" },
+  { "Region_Code": "AMER", "Region_Name": "Americas" },
+  { "Region_Code": "SAARC", "Region_Name": "South Asia" }
+]

@@ -1,0 +1,12 @@
+[
+  { "Country_Code": "IN", "Country_Name": "India",            "Region_Code": "SAARC", "Currency_Code": "INR" },
+  { "Country_Code": "AE", "Country_Name": "UAE",              "Region_Code": "EMEA",  "Currency_Code": "AED" },
+  { "Country_Code": "GB", "Country_Name": "United Kingdom",   "Region_Code": "EMEA",  "Currency_Code": "GBP" },
+  { "Country_Code": "US", "Country_Name": "United States",    "Region_Code": "AMER",  "Currency_Code": "USD" },
+  { "Country_Code": "DE", "Country_Name": "Germany",          "Region_Code": "EMEA",  "Currency_Code": "EUR" },
+  { "Country_Code": "SG", "Country_Name": "Singapore",        "Region_Code": "APAC",  "Currency_Code": "SGD" },
+  { "Country_Code": "MY", "Country_Name": "Malaysia",         "Region_Code": "APAC",  "Currency_Code": "MYR" },
+  { "Country_Code": "SA", "Country_Name": "Saudi Arabia",     "Region_Code": "EMEA",  "Currency_Code": "SAR" },
+  { "Country_Code": "AU", "Country_Name": "Australia",        "Region_Code": "APAC",  "Currency_Code": "AUD" },
+  { "Country_Code": "CA", "Country_Name": "Canada",           "Region_Code": "AMER",  "Currency_Code": "CAD" }
+]

@@ -1,0 +1,10 @@
+[
+  { "Currency_Code": "INR", "Currency_Name": "Indian Rupee",    "Currency_Symbol": "₹", "Country_Code": "IN" },
+  { "Currency_Code": "AED", "Currency_Name": "UAE Dirham",      "Currency_Symbol": "AED", "Country_Code": "AE" },
+  { "Currency_Code": "GBP", "Currency_Name": "British Pound",   "Currency_Symbol": "£", "Country_Code": "GB" },
+  { "Currency_Code": "USD", "Currency_Name": "US Dollar",       "Currency_Symbol": "$", "Country_Code": "US" },
+  { "Currency_Code": "EUR", "Currency_Name": "Euro",            "Currency_Symbol": "€", "Country_Code": "DE" },
+  { "Currency_Code": "SGD", "Currency_Name": "Singapore Dollar","Currency_Symbol": "S$","Country_Code": "SG" },
+  { "Currency_Code": "MYR", "Currency_Name": "Malaysian Ringgit","Currency_Symbol": "RM","Country_Code": "MY" },
+  { "Currency_Code": "SAR", "Currency_Name": "Saudi Riyal",     "Currency_Symbol": "SAR","Country_Code": "SA" }
+]
