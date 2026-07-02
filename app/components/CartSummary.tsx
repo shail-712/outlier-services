@@ -1,10 +1,13 @@
 'use client';
 
+// Import React hooks, shared context, types, and modal component
+
 import { useState } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { TransactionRecord } from '@/types';
 import CheckoutModal from './CheckoutModal';
 
+  // Access global cart data and actions from the application context
 export default function CartSummary() {
   const {
     cart,
@@ -19,13 +22,17 @@ export default function CartSummary() {
     checkout,
   } = useAppContext();
 
+    // Get selected currency details with default fallback values
   const symbol = selectedCurrency?.Currency_Symbol ?? '₹';
   const currencyCode = selectedCurrency?.Currency_Code ?? 'INR';
-
+  
+// Store checkout receipt to display after a successful transaction
   const [receipt, setReceipt] = useState<TransactionRecord[] | null>(null);
 
+    // Enable checkout only when cart, payment method, and VAC are selected
   const canCheckout = cart.length > 0 && selectedPayment !== null && selectedVAC !== null;
 
+    // Process checkout and save transaction records for the receipt modal
   const handleCheckout = () => {
     const records = checkout();
     if (records && records.length > 0) {
