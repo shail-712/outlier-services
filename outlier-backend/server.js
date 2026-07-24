@@ -1,8 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 
+const authRouter = require('./routes/auth');
 const countriesRouter = require('./routes/countries');
 const regionsRouter = require('./routes/regions');
 const currenciesRouter = require('./routes/currencies');
@@ -22,9 +24,11 @@ app.use(
   cors({
     origin: allowedOrigins,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    credentials: true,
   })
 );
 app.use(express.json());
+app.use(cookieParser());
 
 // --- Routes ---
 app.get('/', (req, res) => {
@@ -32,6 +36,7 @@ app.get('/', (req, res) => {
 });
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
+app.use('/api/auth', authRouter);
 app.use('/api/countries', countriesRouter);
 app.use('/api/regions', regionsRouter);
 app.use('/api/currencies', currenciesRouter);
